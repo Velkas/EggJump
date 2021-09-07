@@ -9,7 +9,7 @@ class Title {
     this.instructionSize = 16;
     this.copyright = `© * ${new Date().getFullYear()}`;
     this.copyrightPos = createVector(width - textSize(this.copyright), height - 12);
-    this.clickText = "Press ENTER to play...";
+    this.clickText = "Press ENTER or tap to play...";
     this.clickAlpha = 255;
     this.clickTextPos = createVector(width / 2, height / 2);
   }
@@ -43,10 +43,12 @@ class Title {
     textSize(this.instructionSize);
     text(this.instructions, this.instructionPos.x, this.instructionPos.y);
     // HS
-    strokeWeight(4);
-    textSize(18);
-    let txt = `Hi-Score: ${gameManager.highScore}`;
-    text(txt, textWidth(txt) / 2 + 10, textSize() / 2);
+    if (gameManager.highScore > 0) {
+      strokeWeight(4);
+      textSize(18);
+      let txt = `Hi-Score: ${gameManager.highScore}`;
+      text(txt, textWidth(txt) / 2 + 10, textSize() / 2);
+    }
     // COPYRIGHT
     textFont("Helvetica");
     strokeWeight(2);
@@ -55,6 +57,10 @@ class Title {
     text(this.copyright, this.copyrightPos.x, this.copyrightPos.y);
 
     Common.ShowPressPlay(this.clickText, this.clickTextPos, this.clickAlpha);
+  }
+
+  touchDown(event) {
+    gameManager.state.pop();
   }
 
   keyPressed(key) {
