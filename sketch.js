@@ -7,7 +7,7 @@ let gravity;
 let tokenValues = [];
 let gameManager;
 
-let debug = true;
+let debug = false;
 
 // setup
 function preload() {
