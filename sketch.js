@@ -11,11 +11,11 @@ let debug = true;
 
 // setup
 function preload() {
-  bg = loadImage("/assets/background.png");
-  gameFont = loadFont("/assets/Scrambled_Eggs_Bold.ttf");
-  offscreenIndicator = loadImage("/assets/offscreen_indicator.png");
-  platformSprite = loadImage("/assets/platform.png");
-  egg = loadImage("/assets/egg.png");
+  bg = loadImage("assets/background.png");
+  gameFont = loadFont("assets/Scrambled_Eggs_Bold.ttf");
+  offscreenIndicator = loadImage("assets/offscreen_indicator.png");
+  platformSprite = loadImage("assets/platform.png");
+  egg = loadImage("assets/egg.png");
 }
 
 function setup() {
