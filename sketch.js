@@ -1,7 +1,9 @@
 let bg;
 let egg;
+let barMask;
+let barImage;
+let barFrame;
 let offscreenIndicator;
-let platformSprite;
 let gameFont;
 let gravity;
 let tokenValues = [];
@@ -14,8 +16,9 @@ function preload() {
   bg = loadImage("assets/background.png");
   gameFont = loadFont("assets/Scrambled_Eggs_Bold.ttf");
   offscreenIndicator = loadImage("assets/offscreen_indicator.png");
-  platformSprite = loadImage("assets/platform.png");
   egg = loadImage("assets/egg.png");
+  barMask = loadImage("assets/powerBarMask.png");
+  barFrame = loadImage("assets/powerBarFrame.png");
 }
 
 function setup() {
@@ -28,7 +31,17 @@ function setup() {
   textFont(gameFont);
   imageMode(CENTER);
 
-  gravity = createVector(0, 0.8);
+  barImage = createImage(barMask.width, barMask.height);
+  barImage.loadPixels();
+  for (let i = 0; i < barImage.width; i++) {
+    for (let j = 0; j < barImage.height; j++) {
+      barImage.set(i, j, color(255, 255, 255));
+    }
+  }
+  barImage.updatePixels();
+  barImage.mask(barMask);
+
+  gravity = createVector(0, 0.981);
   tokenValues = [color(234, 138, 105), color(195, 199, 199), color(249, 188, 2)];
 
   gameManager = new GameManager();
@@ -52,5 +65,9 @@ function mouseReleased(event) {
 }
 
 function keyPressed() {
+  if (keyCode == 68) {
+    debug = !debug;
+  }
+
   gameManager.keyPressed(keyCode);
 }

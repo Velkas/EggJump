@@ -20,9 +20,11 @@ class Game {
 
     // initial platforms
     for (let i = 0; i < 5; i++) {
-      let nx = random(platformSprite.width / 2 + 20, width - platformSprite.width / 2 - 20);
-      let ny = i * (height / 4);
-      this.platforms.push(new Platform(nx, -ny, i));
+      let newPlat = new Platform(width / 2, -100, i);
+      newPlat.size.x *= 1.4;
+      newPlat.pos.x = random(newPlat.size.x / 2 + 20, width - newPlat.size.x / 2 - 20);
+      newPlat.pos.y -= i * (height / 4);
+      this.platforms.push(newPlat);
     }
 
     // create player on first platform
@@ -62,6 +64,8 @@ class Game {
 
     let deathLevel = min(min(this.lavaH, this.lavaH2), this.lavaH3);
     this.player.update(deathLevel) ? gameManager.state.pop() : null;
+
+    gravity.y = 0.981 + 0.2 * Common.digits(this.score);
   }
 
   render() {
@@ -108,6 +112,7 @@ class Game {
 
       this.mouseLastX = null;
       this.mouseLastY = null;
+      barImage.height = barMask.height;
     }
   }
 
@@ -116,14 +121,28 @@ class Game {
     fill(255, this.uiFade);
     stroke(47, this.uiFade);
     strokeWeight(6);
+    textSize(32);
     rect(6, 6, textSize() * Common.digits(this.score) + 6, 50, 0, 0, 10, 10);
     // score text
     fill(0, this.uiFade);
     noStroke();
-    textSize(32);
     textAlign(CENTER, CENTER);
     textStyle(BOLD);
     text(this.score, (textSize() * Common.digits(this.score)) / 2 + 12, 12);
+
+    // power  bar
+    push();
+    imageMode(CORNER);
+    translate(60, height / 2 + barMask.height / 2);
+    rotate(PI);
+    if (this.clicked) {
+      colorMode(HSB);
+      let tintMap = map(barImage.height, 0, barMask.height, 0, 127);
+      tint(tintMap, 255, 255);
+      image(barImage, 0, 0);
+    }
+    image(barFrame, 0, 0);
+    pop();
   }
 
   drawLava() {
@@ -202,16 +221,29 @@ class Game {
         )
         .mult(0.8);
 
+      barImage.height = map(
+        dist(
+          mouseX + (this.player.pos.x - this.mouseLastX),
+          mouseY + (this.player.pos.y - this.mouseLastY),
+          this.mouseLastX + (this.player.pos.x - this.mouseLastX),
+          this.mouseLastY + (this.player.pos.y - this.mouseLastY)
+        ),
+        0,
+        mag(width, height),
+        0,
+        barMask.height
+      );
+
       stroke(255, 255, 0);
       strokeWeight(6);
       noFill();
       beginShape();
-      let len = 50;
+      let len = 5;
       for (let i = 0; i < len; i++) {
         let t = i / len;
-        let x = vel.x * t;
-        let y = vel.y * t - cos(-gravity.y * pow(t, 2)) / 2;
-        vertex(x + this.player.pos.x, y + this.player.pos.y);
+        let x = this.player.pos.x + vel.x * t;
+        let y = this.player.pos.y + vel.y * t - (-gravity.y * 100 * pow(t, 2)) / 2;
+        vertex(x, y);
       }
       endShape();
     }

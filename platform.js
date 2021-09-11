@@ -1,8 +1,7 @@
 class Platform {
-  constructor(x, y, index, sprite) {
+  constructor(x, y, index) {
     this.pos = createVector(x, y);
-    this.sprite = sprite || platformSprite;
-    this.size = createVector(this.sprite.width, this.sprite.height);
+    this.size = createVector(100, 32);
     this.acc = createVector(0, 0);
     this.vel = createVector(0, 2);
 
@@ -12,10 +11,11 @@ class Platform {
   }
 
   update() {
-    this.pos.y += 0.8;
+    this.pos.y += gravity.y;
 
     if (this.pos.y > height) {
-      this.pos.x = random(platformSprite.width / 2 + 20, width - platformSprite.width / 2 - 20);
+      this.size.x = random(100, 125);
+      this.pos.x = random(this.size.x / 2 + 20, width - this.size.x / 2 - 20);
       this.pos.y = -100;
       this.hasCoin = this.getRandomCoinChance(2);
       this.value = round(random(0, 2));
@@ -24,7 +24,10 @@ class Platform {
 
   render() {
     // platform
-    image(this.sprite, this.pos.x, this.pos.y);
+    fill(143, 86, 59, 255);
+    stroke(0);
+    strokeWeight(4);
+    rect(this.pos.x - this.size.x / 2, this.pos.y - this.size.y / 2, this.size.x, this.size.y, 0, 0, 5, 5);
 
     // coin
     if (this.hasCoin) {

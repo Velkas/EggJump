@@ -9,7 +9,7 @@ class Player {
   }
 
   update(deathLevel) {
-    this.vel.y += gravity.y;
+    this.vel.y += 0.8;
 
     if (this.pos.x - this.size.x / 2 < 0 || this.pos.x + this.size.x / 2 > width) {
       this.vel.x *= -1;
