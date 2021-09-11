@@ -48,6 +48,21 @@ class Game {
     this.lavaP2 += random(0.011, 0.012);
     this.lavaP3 += random(0.012, 0.013);
 
+    if (this.clicked) {
+      barImage.height = map(
+        dist(
+          mouseX + (this.player.pos.x - this.mouseLastX),
+          mouseY + (this.player.pos.y - this.mouseLastY),
+          this.mouseLastX + (this.player.pos.x - this.mouseLastX),
+          this.mouseLastY + (this.player.pos.y - this.mouseLastY)
+        ),
+        0,
+        mag(width, height) / 2,
+        0,
+        barMask.height
+      );
+    }
+
     this.uiFadeHit = false;
     for (let plat of this.platforms) {
       plat.update();
@@ -112,7 +127,6 @@ class Game {
 
       this.mouseLastX = null;
       this.mouseLastY = null;
-      barImage.height = barMask.height;
     }
   }
 
@@ -157,7 +171,7 @@ class Game {
     fill(255, 163, 34, 200);
     rect(-6, this.lavaH2, width + 12, height + 6);
 
-    stroke(255, 145, 30);
+    stroke(255, 150, 45);
     fill(255, 160, 30, 150);
     rect(-6, this.lavaH3, width + 12, height + 6);
   }
@@ -220,19 +234,6 @@ class Game {
           this.mouseLastY + (this.player.pos.y - this.mouseLastY)
         )
         .mult(0.8);
-
-      barImage.height = map(
-        dist(
-          mouseX + (this.player.pos.x - this.mouseLastX),
-          mouseY + (this.player.pos.y - this.mouseLastY),
-          this.mouseLastX + (this.player.pos.x - this.mouseLastX),
-          this.mouseLastY + (this.player.pos.y - this.mouseLastY)
-        ),
-        0,
-        mag(width, height),
-        0,
-        barMask.height
-      );
 
       stroke(255, 255, 0);
       strokeWeight(6);

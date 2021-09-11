@@ -31,6 +31,8 @@ function setup() {
   textFont(gameFont);
   imageMode(CENTER);
 
+  barMask.resize(barMask.width * 0.75, barMask.height * 0.75);
+  barFrame.resize(barMask.width, barMask.height);
   barImage = createImage(barMask.width, barMask.height);
   barImage.loadPixels();
   for (let i = 0; i < barImage.width; i++) {
