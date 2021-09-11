@@ -4,7 +4,9 @@ class Title {
     this.titleText = "EGGjUMP";
     this.titlePos = createVector(width / 2, height / 4);
     this.titleSize = 48;
-    this.instructions = "Click and drag to aim and set power.\nDon't let the egg fall in the lava!";
+    this.instructions = `Left click and drag to aim and set power.
+    Right click to cancel.
+    \r\nDon't let the egg fall in the lava!`;
     this.instructionPos = createVector(width / 2, height - height / 3);
     this.instructionSize = 16;
     this.copyright = `© * ${new Date().getFullYear()}`;
