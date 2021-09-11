@@ -9,7 +9,7 @@ class Title {
     this.instructionSize = 16;
     this.copyright = `© * ${new Date().getFullYear()}`;
     this.copyrightPos = createVector(width - textSize(this.copyright), height - 12);
-    this.clickText = "Press ENTER or tap to play...";
+    this.clickText = "Press ENTER to play...";
     this.clickAlpha = 255;
     this.clickTextPos = createVector(width / 2, height / 2);
   }
@@ -60,7 +60,7 @@ class Title {
   }
 
   touchDown(event) {
-    gameManager.state.pop();
+    //gameManager.state.pop();
   }
 
   keyPressed(key) {
